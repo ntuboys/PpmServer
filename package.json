@@ -34,6 +34,13 @@
   "eslintConfig": {
     "extends": [
       "strict"
-    ]
+    ],
+    "rules": {
+      "filenames/match-regex": 0,
+      "func-style":"off",
+      "no-console": "off",
+      "no-underscore-dangle": "off",
+      "id-blacklist": "off"
+    }
   }
 }

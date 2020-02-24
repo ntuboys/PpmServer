@@ -1,4 +1,3 @@
-/* eslint-disable filenames/match-regex */
 import mongoose from 'mongoose';
 import { ItemSchema } from './itemModel';
 import { OrderSchema } from './orderModel';

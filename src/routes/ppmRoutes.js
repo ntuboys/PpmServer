@@ -1,4 +1,3 @@
-/* eslint-disable filenames/match-regex */
 import { getShops, createNewShop, addToShopInventory } from '../controllers/ppmControllers';
 import { register, login, loginRequired } from '../controllers/userControllers'
 

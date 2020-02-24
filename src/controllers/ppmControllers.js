@@ -1,4 +1,3 @@
-/* eslint-disable filenames/match-regex */
 import mongoose from 'mongoose';
 import { ShopSchema } from '../models/shopModel';
 import { ItemSchema } from '../models/itemModel';
