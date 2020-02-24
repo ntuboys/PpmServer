@@ -1,5 +1,5 @@
 import { getShops, createNewShop, addToShopInventory } from '../controllers/ppmControllers';
-import { register, login, loginRequired } from '../controllers/userControllers'
+import { register, login, loginRequired } from '../controllers/userControllers';
 
 const routes = (app) => {
   // create a new shop

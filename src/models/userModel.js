@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 export const UserSchema = new Schema({
   username: {
@@ -25,6 +25,4 @@ export const UserSchema = new Schema({
   },
 });
 
-UserSchema.methods.comparePassword = (password, passwordHash) => {
-  return bcrypt.compareSync(password, passwordHash);
-}
+UserSchema.methods.comparePassword = (password, passwordHash) => bcrypt.compareSync(password, passwordHash);

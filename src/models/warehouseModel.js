@@ -25,7 +25,7 @@ export const WarehouseModel = new Schema({
       unique: true,
     },
     items: {
-      
+
     },
   },
   createDate: {

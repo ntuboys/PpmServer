@@ -22,7 +22,3 @@ export const ShopSchema = new Schema({
     default: Date.now,
   },
 });
-
-ShopSchema.methods.checkUser = (user) => {
-  return this.users.find(o => o.id == user);
-};

@@ -7,7 +7,7 @@ import helmet from 'helmet';
 
 const app = express();
 const PORT = 4000;
-const secret = "fszJTCkDVTwUo7m2SJdh";
+const secret = 'fszJTCkDVTwUo7m2SJdh';
 
 app.use(helmet());
 
