@@ -4,6 +4,8 @@ import bodyParser from 'body-parser';
 import jsonwebtoken from 'jsonwebtoken';
 import routes from './src/routes/ppmRoutes';
 import helmet from 'helmet';
+import { UserSchema } from './src/models/userModel';
+const User = mongoose.model('User', UserSchema);
 
 const app = express();
 const PORT = 4000;
@@ -22,16 +24,26 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-  if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
-    jsonwebtoken.verify(req.headers.authorization.split(' ')[1], secret, (err, decode) => {
-      if (err) {
+  if (req.headers && req.headers.token && req.headers && req.headers.username) {
+    User.findOne({
+      username: req.headers.username,
+    }, (err, user) => {
+      if (err) throw err;
+      if (!user) {
         req.user = undefined;
+      } else if (user) {
+        if (user.verifyToken(req.headers.username, req.headers.token)) {
+          req.user = { username: req.headers.username, token: req.headers.token, id: user._id };
+          console.log('setting user');
+        } else {
+          req.user = undefined;
+        }
       }
-      req.user = decode;
       next();
     });
   } else {
     req.user = undefined;
+    console.log(req.user);
     next();
   }
 });

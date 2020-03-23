@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+import randomstring from 'randomstring';
 
 const { Schema } = mongoose;
 
@@ -17,7 +18,7 @@ export const UserSchema = new Schema({
     required: true,
   },
   tokens: {
-    type: [ String ],
+    type: [String],
   },
   createDate: {
     type: Date,
@@ -26,3 +27,18 @@ export const UserSchema = new Schema({
 });
 
 UserSchema.methods.comparePassword = (password, passwordHash) => bcrypt.compareSync(password, passwordHash);
+UserSchema.methods.generateToken = function generateToken() {
+  const token = randomstring.generate({
+    length: 100,
+    charset: 'alphanumeric',
+  });
+  this.tokens.push(token);
+  this.save();
+  return token;
+};
+UserSchema.methods.verifyToken = function verifyToken(username, token) {
+  if (username === this.username && this.tokens.includes(token)) {
+    return true;
+  }
+  return false;
+};
