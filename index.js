@@ -28,7 +28,9 @@ app.use((req, res, next) => {
     User.findOne({
       username: req.headers.username,
     }, (err, user) => {
-      if (err) throw err;
+      if (err) {
+        throw err;
+      }
       if (!user) {
         req.user = undefined;
       } else if (user) {
