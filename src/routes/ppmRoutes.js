@@ -1,4 +1,4 @@
-import { getShops, createNewShop, addToShopInventory } from '../controllers/ppmControllers';
+import { getShops, createNewShop, addToShopInventory, getItemFromInventory, setQntOfItem } from '../controllers/ppmControllers';
 import { register, login, loginRequired } from '../controllers/userControllers';
 
 const routes = (app) => {
@@ -6,9 +6,17 @@ const routes = (app) => {
   app.route('/shop/create')
     .post(loginRequired, createNewShop);
 
-  // get shop inventory route
+  // get all shops where the user is an owner route
   app.route('/shop/')
     .get(loginRequired, getShops);
+
+  // set qnt of an item in inventory
+  app.route('/shop/:shopId/inventory/:itemId/qnt/:qnt')
+  .post(loginRequired, setQntOfItem);
+
+  // get an item from the inventory
+  app.route('/shop/:shopId/inventory/:itemId/')
+    .get(loginRequired, getItemFromInventory);
 
   // add to shops inventory
   app.route('/shop/:shopId/inventory/add')

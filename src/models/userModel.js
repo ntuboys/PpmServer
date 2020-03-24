@@ -18,7 +18,7 @@ export const UserSchema = new Schema({
     required: true,
   },
   tokens: {
-    type: [String],
+    type: [ String ],
   },
   createDate: {
     type: Date,

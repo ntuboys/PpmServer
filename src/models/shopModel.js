@@ -22,3 +22,13 @@ export const ShopSchema = new Schema({
     default: Date.now,
   },
 });
+ShopSchema.methods.isUserOwner = function isUserOwner(userId) {
+  this.users.map((user, i) => {
+    if (user._id.toString() === userId.toString()) {
+      return true;
+    }
+    if (i === this.users.length - 1) {
+      return false;
+    }
+  });
+};

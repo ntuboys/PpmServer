@@ -24,7 +24,8 @@
     "express": "^4.17.1",
     "helmet": "^3.21.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.2"
+    "mongoose": "^5.9.2",
+    "randomstring": "^1.1.5"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
@@ -37,7 +38,7 @@
     ],
     "rules": {
       "filenames/match-regex": 0,
-      "func-style":"off",
+      "func-style": "off",
       "no-console": "off",
       "no-underscore-dangle": "off",
       "id-blacklist": "off"
