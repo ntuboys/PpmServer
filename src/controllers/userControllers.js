@@ -5,6 +5,8 @@ import { UserSchema } from '../models/userModel';
 
 const User = mongoose.model('User', UserSchema);
 
+export const verifyToken = (req, res) => res.status(200).json({ message: 'valid' });
+
 export const register = (req, res) => {
   User.count({ username: req.body.username }, (err, count) => {
     if (err) {
@@ -30,6 +32,7 @@ export const register = (req, res) => {
 };
 
 export const login = (req, res) => {
+  console.log(req.body);
   User.findOne({
     username: req.body.username,
   }, (err, user) => {
