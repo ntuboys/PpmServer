@@ -22,6 +22,7 @@ const routes = (app) => {
   app.route('/shop/:shopId/inventory/add')
     .post(loginRequired, addToShopInventory);
 
+  // get a token
   app.route('/auth/token')
     .post(loginRequired, verifyToken);
 
