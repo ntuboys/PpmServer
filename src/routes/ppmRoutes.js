@@ -1,4 +1,4 @@
-import { getShops, createNewShop, addToShopInventory, getItemFromInventory, setQntOfItem } from '../controllers/ppmControllers';
+import { getShops, createNewShop, addToShopInventory, getItemFromInventory, setQntOfItem, getAllInventory } from '../controllers/ppmControllers';
 import { register, login, loginRequired, verifyToken } from '../controllers/userControllers';
 
 const routes = (app) => {
@@ -25,6 +25,10 @@ const routes = (app) => {
   // get a token
   app.route('/auth/token')
     .post(loginRequired, verifyToken);
+
+  // get all inventories of all shops
+  app.route('/all/inventory')
+    .get(loginRequired, getAllInventory);
 
   // register route
   app.route('/auth/register')
