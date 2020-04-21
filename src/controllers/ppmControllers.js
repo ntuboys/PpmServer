@@ -33,7 +33,12 @@ export const createNewShop = (req, res) => {
 };
 
 export const addToShopInventory = (req, res) => {
+  console.log('new item to shop')
+  console.log(req.body)
   // find shop to which to add from the url
+  if (!req.body.name || !req.body.description || !req.body.qnt || !req.body.price) {
+    return res.status(500).json({ message: "name, desc, qnt, price required" })
+  }
   Shop.findById(req.params.shopId, (err, shop) => {
     if (err) {
       return res.status(500).json(err);
@@ -67,6 +72,19 @@ export const setQntOfItem = (req, res) => {
     return res.status(401);
   });
 };
+
+export const getAllInventory = (req, res) => {
+  Shop.find({}, (err, result) => {
+    let response = [];
+    result.forEach(shop => {
+      if (shop.stock.length > 0) {
+        console.log(shop);
+        response = response.concat({ shopName: shop.name, shopId: shop._id, shopStock: shop.stock });
+      }
+    })
+    res.status(200).json(response);
+  });
+}
 
 export const getItemFromInventory = (req, res) => {
 
