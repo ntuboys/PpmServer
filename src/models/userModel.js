@@ -17,13 +17,31 @@ export const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  invCode: {
+    type: String,
+    required: true,
+  },
   tokens: {
-    type: [ String ],
+    type: [String],
   },
   createDate: {
     type: Date,
     default: Date.now,
   },
+  coupons: {
+    type: [
+      {
+        desc: {
+          type: String,
+          required: true,
+        },
+        amount: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
+  }
 });
 
 UserSchema.methods.comparePassword = (password, passwordHash) => bcrypt.compareSync(password, passwordHash);
