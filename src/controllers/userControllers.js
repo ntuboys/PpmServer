@@ -8,6 +8,7 @@ const User = mongoose.model('User', UserSchema);
 export const verifyToken = (req, res) => res.status(200).json({ message: 'valid' });
 
 export const register = (req, res) => {
+  console.log(req.body);
   User.count({ username: req.body.username }, (err, count) => {
     if (err) {
       throw err;
@@ -20,12 +21,22 @@ export const register = (req, res) => {
       }
       const newUser = new User(req.body);
       newUser.passwordHash = bcrypt.hashSync(req.body.password, 10);
+      console.log('yes?');
+      if (req.body.invBy !== null) {
+        User.findOne({ username: req.body.invBy }, (err, user) => {
+          if (!err) {
+            user.coupons.push({ desc: 'Friend referral', amount: 10 });
+            user.save();
+            newUser.coupons.push({ desc: 'Friend referral', amount: 10 });
+          }
+        });
+      }
       newUser.save((err, user) => {
         if (err) {
           return res.status(400).json(err);
         }
         user.passwordHash = undefined;
-        return res.status(200).json(user);
+        return res.status(200).json(newUser);
       });
     }
   });
