@@ -26,10 +26,12 @@ app.use(bodyParser.json());
 
 
 app.use((req, res, next) => {
+  console.log(req.body);
   if (req.headers && req.headers.token && req.headers && req.headers.username) {
     User.findOne({
       username: req.headers.username,
     }, (err, user) => {
+      console.log(user);
       if (err) {
         throw err;
       }
@@ -55,5 +57,5 @@ app.use((req, res, next) => {
 routes(app);
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${ PORT }`);
+  console.log(`Server running on port ${PORT}`);
 });
