@@ -17,10 +17,6 @@ export const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  invCode: {
-    type: String,
-    required: true,
-  },
   tokens: {
     type: [String],
   },
@@ -41,7 +37,8 @@ export const UserSchema = new Schema({
         },
       },
     ],
-  }
+    default: [],
+  },
 });
 
 UserSchema.methods.comparePassword = (password, passwordHash) => bcrypt.compareSync(password, passwordHash);
