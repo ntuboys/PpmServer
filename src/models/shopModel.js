@@ -14,9 +14,9 @@ export const ShopSchema = new Schema({
     type: String,
     required: true,
   },
-  users: [ ShopUser ],
-  stock: [ ItemSchema ],
-  orders: [ OrderSchema ],
+  users: [ShopUser],
+  stock: [ItemSchema],
+  orders: [OrderSchema],
   createDate: {
     type: Date,
     default: Date.now,

@@ -7,7 +7,18 @@ export const OrderSchema = new Schema({
   status: {
     type: String,
     required: true,
-    enum: [ 'processing', 'shipped', 'arrived' ],
+    enum: ['processing', 'shipped', 'arrived'],
   },
-  items: [ ItemSchema ],
+  /*
+  items: [{
+    itemId: {
+      type: String,
+      required: true,
+    }
+  }],
+  */
+  itemId: {
+    type: String,
+    required: true,
+  }
 });

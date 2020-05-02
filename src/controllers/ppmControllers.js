@@ -64,12 +64,61 @@ export const addToShopInventory = (req, res) => {
 export const setQntOfItem = (req, res) => {
   Shop.findById(req.params.shopId, (err, shop) => {
     if (err) {
-      res.status(500).json(err);
+      return res.status(500).json(err);
     }
     if (shop.isUserOwner(req.user.id)) {
       // TODO
     }
     return res.status(401);
+  });
+};
+
+export const buyItem = (req, res) => {
+  Shop.updateOne({ _id: req.body.shopId }, {
+    $push: { orders: { status: 'processing', itemId: req.body.item } },
+  }, (err, data) => {
+    console.log(err);
+    console.log(data);
+    if (data.ok) {
+      return res.status(200).json({ message: "success" });
+    }
+    return res.status(500).json({ message: 'failed' });
+  });
+  /*
+  Shop.findById(req.body.shopId, (err, shop) => {
+    if (err) {
+      return res.status(500).json(err);
+    }
+    if (shop.placeOrder(req.body)) {
+      return res.status(200).json({ message: "success" });
+    }
+    return res.status(500).json({ message: 'failed' });
+  });
+  */
+};
+
+export const getOrders = (req, res) => {
+  Shop.find({}, (err, shops) => {
+    console.log(req.user);
+    if (err) {
+      return res.status(500).json(err);
+    }
+    const shopsRet = [];
+    shops.map((shop) => {
+      shop.users.map((shopUser) => {
+        if ((shopUser.id.toString() === req.user.id.toString()) && shopUser.owner) {
+          shopsRet.push(shop);
+        }
+      });
+    });
+
+    let ordersRet = [];
+    shopsRet.forEach(shop => {
+      if (shop.orders.length > 0) {
+        ordersRet = ordersRet.concat(shop.orders);
+      }
+    })
+    return res.status(200).json(ordersRet);
   });
 };
 
@@ -84,7 +133,7 @@ export const getAllInventory = (req, res) => {
     })
     res.status(200).json(response);
   });
-}
+};
 
 export const getItemFromInventory = (req, res) => {
 
